@@ -1,0 +1,22 @@
+*{
+  margin: 0;
+}
+:root {
+  background-color: #242424;
+}
+h1,
+h2,
+h3,
+p,
+li{
+  font-family: Arial;
+}
+h2, h1{
+  color: white;
+}
+ul{
+  padding-inline-start: 20px;
+}
+.close{
+  color: red;
+}

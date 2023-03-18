@@ -1,0 +1,43 @@
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.buttons{
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+.close,
+.edit{
+  background-color: transparent;
+  border: none;
+}
+.paper{
+  background-color: rgb(211, 210, 205);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 200px;
+  min-height: 20px;
+}
+form {
+  display: flex;
+}
+input {
+  height: 24px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+}
+.add {
+  height: 25px;
+  padding: 0px 12px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  background-color: rgb(53, 53, 232);
+  border-radius: 0 5px 5px 0;
+}
