@@ -1,10 +1,40 @@
 import { useState } from 'react';
 import '../styles/card.css';
+import { v4 as uuid } from 'uuid';
 
-export function Card({  }) {
-  const [editable, setEditable] = useState(false);
-  const initialState = JSON.parse(localStorage.getItem('achivements')) || [];
-  const [achivements, setAchivements] = useState(initialState);
+function Day ({ date, content, editable }) {
+  function editTonalli() {
+    
+  };
+  function manageDelete() {};
+  function manageExit () {};
+  function manageSave () {};
+
+  return (
+    <div className="paper">
+    <button className='edit' onClick={editTonalli}>🖋️</button>
+    <h3>{date}</h3>
+      <form >
+        <input type="text" placeholder='Ex: Read 20min' />
+        <button className='add'>+</button>
+      </form>
+      {content.map(task => {
+        return (
+          <li key={uuid()}>{task}</li>
+        )
+      })}
+    <div className='edit_buttons'>
+      <button className='delete' onClick={manageDelete}>Delete</button>
+      <button className='exit' onClick={manageExit}>Exit</button>
+      <button className='save' onClick={manageSave}>Save</button>
+    </div>
+  </div>
+
+  )
+}
+
+export function Card({ achivements, id }) {
+  console.log(achivements)
 
   function getDate () {
     const date = new Date();
@@ -13,56 +43,39 @@ export function Card({  }) {
     const yy = date.getFullYear();
 
     return `${dd}-${mm}-${yy}`
-  }
-  function editTonalli() {
-    setEditable(prevState => !prevState)
-  };
-  function deleteTonalli() {
-    console.log('Detele tonalli?')
   };
   function updateLocalStorage (newState) {
     window.localStorage.setItem('achivements', JSON.stringify(newState))
-  }
+  };
   function manageAddAcomplish (e) {
     e.preventDefault();
 
     const inputValue = e.target[0].value;
-    const newState = [...achivements, inputValue];
+    const newState = [...achivements, {
+      task: inputValue,
+      }];
 
     setAchivements(newState);
     updateLocalStorage(newState);
-  }
+
+    e.target[0].value = '';
+  };
+
 
   return(
-    <div className="card">
-      <div className="paper">
-        <h3 >DD-MM-YY</h3>
-        <button className='edit' onClick={editTonalli}>
-          🖋️
-        </button>
-        {editable && 
-          <form onSubmit={manageAddAcomplish}>
-            <input type="text" placeholder='Ex: Read 20min' />
-            <button className='add'>+</button>
-          </form>
-        }
-        <ul>
-          {
-            achivements.map((element, index) => {
-              return(
-                <li contentEditable={editable} key={index}>{element}</li>
-              )
-            })
-          }
-        </ul>
-        {editable &&
-        <div className='edit_buttons'>
-          <button className='delete'>Delete</button>
-          <button className='exit'>Exit</button>
-          <button className='save'>Save</button>
-        </div>
-        }
-      </div>
+    <div className="day_list">
+      {
+        achivements.map(element => {
+          return (
+            <Day
+              key={uuid()} 
+              date={element.date}
+              content={element.content}
+              editable={element.editable}
+            />
+          )
+        })
+      }
     </div>
   )
 }

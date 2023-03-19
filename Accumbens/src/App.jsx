@@ -1,18 +1,21 @@
 import { useState } from 'react'
 import './styles/App.css';
 import { Card } from './Components/Card';
-import achivements from './achivements'
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-  const [tonalli, setTonalli] = useState([
-    'Read 30 minutes',
-    'Coding 1 hour',
-    'Starting new project',
-    'Starting new draw',
-    'Work out',
-    'Walk my dogs'
-  ]);
-  const [date, setDate] = useState('');
+  const initialState = JSON.parse(localStorage.getItem('achivements')) || [    { 
+    day: 'Today',
+    task: ['Code', 'Study english'],
+  }
+];
+  const [achivements, setAchivements] = useState([
+    { 
+      date: 'Today',
+      content: ['Code', 'Study english'],
+      editable: false
+    }
+]);
 
   return (
     <>
@@ -28,7 +31,15 @@ function App() {
         </div>
       </header>
       <main className="tonalli_list">
-        <Card achivements={tonalli} editable={false} />
+        {achivements.map(element => {
+          return(
+            <Card 
+              key={uuidv4()}
+              achivements={achivements}
+              id={uuidv4()}
+            />
+          )
+        })}        
       </main>
     </>
   )
