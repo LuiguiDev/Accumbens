@@ -2,40 +2,68 @@ import { useState } from 'react';
 import '../styles/card.css';
 import { v4 as uuid } from 'uuid';
 
-function Day ({ date, content, editable }) {
-  function editTonalli() {
-    
+function Day ({ dayContent, state, changeAchivementsState}) {
+  function editTonalli (selectedId) {
+    const newState = structuredClone(state)
+    const findedIndex = state.findIndex(({id}) => id === selectedId);
+    const findedCard = newState[findedIndex]
+
+    if(!findedCard) return
+    if(findedCard) {
+      findedCard.editable = !findedCard.editable
+      changeAchivementsState(newState)
+    }
   };
-  function manageDelete() {};
+  function manageSubmit (e) {
+    e.preventDefault();
+
+    const newState = structuredClone(state);
+    const inputValue = e.target[0].value;
+    const finded = newState.find(({id}) => id === dayContent.id)
+
+    finded.content.push(inputValue)
+    changeAchivementsState(newState)
+  }
+  function manageDelete() {
+    if(confirm('Are you sure you want to delete this entire day?')){
+      const newState = state.filter(({id}) => id != dayContent.id);
+
+      changeAchivementsState(newState)
+    }else{
+      console.log('Keep editing')
+    }
+  };
   function manageExit () {};
   function manageSave () {};
 
   return (
     <div className="paper">
-    <button className='edit' onClick={editTonalli}>🖋️</button>
-    <h3>{date}</h3>
-      <form >
+    <button className='edit' onClick={() => editTonalli(dayContent.id)}>🖋️</button>
+    <h3>{dayContent.date}</h3>
+    {dayContent.editable && 
+      <form onSubmit={manageSubmit}>
         <input type="text" placeholder='Ex: Read 20min' />
         <button className='add'>+</button>
       </form>
-      {content.map(task => {
-        return (
-          <li key={uuid()}>{task}</li>
-        )
-      })}
-    <div className='edit_buttons'>
-      <button className='delete' onClick={manageDelete}>Delete</button>
-      <button className='exit' onClick={manageExit}>Exit</button>
-      <button className='save' onClick={manageSave}>Save</button>
-    </div>
+    }
+    {dayContent.content.map(task => {
+      return (
+        <li key={uuid()}>{task}</li>
+      )
+    })}
+    {dayContent.editable &&
+      <div className='edit_buttons'>
+        <button className='delete' onClick={manageDelete}>Delete</button>
+        <button className='exit' onClick={manageExit}>Exit</button>
+        <button className='save' onClick={manageSave}>Save</button>
+      </div>
+    }
   </div>
 
   )
 }
 
-export function Card({ achivements, id }) {
-  console.log(achivements)
-
+export function Card({ achivements, changeAchivementsState}) {
   function getDate () {
     const date = new Date();
     const dd = date.getDate();
@@ -69,9 +97,9 @@ export function Card({ achivements, id }) {
           return (
             <Day
               key={uuid()} 
-              date={element.date}
-              content={element.content}
-              editable={element.editable}
+              dayContent={element}
+              state={achivements}
+              changeAchivementsState={changeAchivementsState}
             />
           )
         })
