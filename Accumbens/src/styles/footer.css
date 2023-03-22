@@ -1,0 +1,21 @@
+footer {
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  background-color: var(--footer_background);
+  color: var(--body_color);
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 40px);
+  justify-content: space-between;
+}
+.social_media {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+a{
+  font-family: arial;
+  text-decoration: none;
+  color: rgb(9,178,118);
+}

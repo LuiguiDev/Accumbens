@@ -1,6 +1,7 @@
 p, .li_element {
-  color: white
+  color: var(--body_color)
 }
+
 .add_day_prev {
   outline: inherit;
   width: 240px;
@@ -12,14 +13,28 @@ p, .li_element {
 }
 .add_day_prev:hover{
   background-color: rgb(9,178,118);
-  color: white;
+  color: var(--body_color);
 }
 header {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content:space-between;
   gap: 10px;
-  max-width: 500px;
+  padding: 20px;
+  width: calc(100% - 40px);
+  background-color: var(--footer_background);
+}
+.theme_button {
+  border-radius: 50%;
+  padding: 0;
+  width: 35px;
+  height: 35px;
+  border: none;
+}
+.add_day_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 240px;
   margin: auto;
 }
 .card {
@@ -27,7 +42,7 @@ header {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  border: 1px solid rgb(9,178,118);
+  border: 2px solid rgb(9,178,118);
   padding: 20px;
   border-radius: 10px;
   max-width: 200px;
@@ -37,6 +52,42 @@ header {
   flex-direction: column;
   gap: 10px;
 }
+#date_input {
+  border: var(--input_border);
+  border-radius: 5px;
+}
+#add_input {
+  border: var(--input_border);
+  height: 20px;
+}
 .add_acc {
   display: flex;
+}
+.buttons_sc {
+  display: flex;
+  gap: 20px;
+}
+.close_day {
+  border: 2px solid gray;
+  background-color: transparent;
+  color: var(--body_color);
+  height: 24px;
+  border-radius: 5px;
+  padding: 2px 15px;
+}
+.close_day:hover {
+  background-color: grey;
+  color: white;
+}
+.add_day {
+  height: 24px;
+  border: 2px solid rgb(9,178,118);
+  border-radius: 5px;
+  background: transparent;
+  padding: 2px 15px;
+  color: var(--body_color);
+}
+.add_day:hover{
+  background-color: rgb(9,178,118);
+  color: white;
 }

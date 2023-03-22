@@ -4,7 +4,8 @@ import { v4 as uuid } from 'uuid';
 import { Day } from './Day';
 
 
-export function DaysList({ achivements, changeAchivementsState}) {
+export function DaysList({ achivements, changeAccState}) {
+
   function getDate () {
     const date = new Date();
     const dd = date.getDate();
@@ -30,9 +31,8 @@ export function DaysList({ achivements, changeAchivementsState}) {
     e.target[0].value = '';
   };
 
-
   return(
-    <div className="day_list">
+    <main className="day_list">
       {
         achivements.map(element => {
           return (
@@ -40,11 +40,11 @@ export function DaysList({ achivements, changeAchivementsState}) {
               key={uuid()} 
               dayContent={element}
               state={achivements}
-              changeAchivementsState={changeAchivementsState}
+              changeAccState={changeAccState}
             />
           )
         })
       }
-    </div>
+    </main>
   )
 }

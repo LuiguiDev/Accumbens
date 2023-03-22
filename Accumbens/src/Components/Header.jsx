@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import '../styles/header.css'
 
 export function Header ({ overallState, changeAccState }) {
+  // States
   const [day, setDay] = useState(
     {
       id: uuid(),
@@ -11,8 +12,23 @@ export function Header ({ overallState, changeAccState }) {
       editable: false
     }
   );
-  const [prevMode, setPrevMode] = useState(false)
+  const [prevMode, setPrevMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
+  // Functions
+  function changeMode () {
+    const body = document.querySelector('body')
+    if (darkMode) {
+      body.setAttribute('data-theme', 'dark')
+      setDarkMode(false)
+    }else if (!darkMode) {
+      body.setAttribute('data-theme', 'light')
+      setDarkMode(true)
+    }
+  }
+  useState(() => {
+    changeMode()
+  }, []);
   function addAcc (e) {
     e.preventDefault();
 
@@ -21,9 +37,13 @@ export function Header ({ overallState, changeAccState }) {
 
     newState.content.push(inputValue)
     setDay(newState)
-  }
+  };
+  function shrinkAddDay () {
+    setPrevMode(true)
+  };
 
-  function AddDayPrev () {
+  //Components
+  const AddDayPrev = () => {
     return (
       <button 
         className="add_day_prev"
@@ -32,13 +52,22 @@ export function Header ({ overallState, changeAccState }) {
       Add Day
       </button>
     )
-  }
-  function AddDayExtended ({overallState, changeAccState}) {
-
+  };
+  const AddDayExtended = ({overallState, changeAccState}) => {
     function manageAddDay () {
+      if(day.content.length === 0) return
+
       const newState = structuredClone(overallState);
-      newState.push(day)
-      changeAccState(newState)
+
+      newState.push(day);
+      changeAccState(newState);
+      setDay({
+        id: uuid(),
+        content: [],
+        date: undefined,
+        editable: false
+      });
+      window.localStorage.setItem('achivements', JSON.stringify(newState))
     };
     function manageDateChange (e) {
       const dateValue= e.target.value
@@ -47,6 +76,7 @@ export function Header ({ overallState, changeAccState }) {
       newDayState.date = dateValue;
       setDay(newDayState)
     };
+
     return (
       <div className="card">
         <div className="inputs">
@@ -57,7 +87,7 @@ export function Header ({ overallState, changeAccState }) {
             onChange={manageDateChange}
           />
           <form className="add_acc" onSubmit={addAcc}>
-            <input type="text" placeholder="Ex: Read 20min"/>
+            <input id="add_input" type="text" placeholder="Ex: Read 20min"/>
             <button className="add" type="submit"> +</button>
           </form>
         </div>
@@ -73,15 +103,29 @@ export function Header ({ overallState, changeAccState }) {
             )
           })}
         </ul>
-        <button className="add_day" onClick={manageAddDay}>Add day</button>
+        <div className="buttons_sc">
+          <button className="close_day" onClick={shrinkAddDay}>Close</button>
+          <button className="add_day" onClick={manageAddDay}>Add day</button>
+        </div>
     </div>
     )
-  }
+  };
+
   return (
-    <header>
-      <h1>1% better everyday</h1>
-      <p>Write your accomplishments everyday to stay motivated</p>
-      {prevMode ? <AddDayPrev /> : <AddDayExtended overallState={overallState} changeAccState={changeAccState} />}
-    </header>
+    <>
+      <header>
+        <h1>The Done List</h1>
+        <button 
+          className='theme_button'
+          onClick={changeMode}
+        >
+          {darkMode ? '🌙' : '☀️'}
+        </button>
+      </header>
+      <div className="add_day_container">
+        <p>Write your accomplishments everyday to stay motivated</p>
+        {prevMode ? <AddDayPrev /> : <AddDayExtended overallState={overallState} changeAccState={changeAccState} />}
+      </div>
+    </>
   )
 }

@@ -1,18 +1,32 @@
 *{
   margin: 0;
 }
-:root {
-  background-color: #242424;
+#root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
+:root {
+  --body_background: #242424;
+  --body_color: white;
+  --input_border: 2px solid white;
+  --buttons_color: white;
+  --footer_background: black;
+}
+[data-theme='light'] {
+  --body_background: #ffffff;
+  --body_color: black;
+  --input_border: 2px solid #09b276;
+  --buttons_color: black;
+  --footer_background: rgb(216, 223, 238);
+}
+
 h1,
 h2,
 h3,
 p,
 li{
   font-family: Arial;
-}
-h2, h1{
-  color: white;
 }
 ul{
   padding-inline-start: 20px;
