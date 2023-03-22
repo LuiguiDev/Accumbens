@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import '../styles/card.css';
-import { v4 as uuid } from 'uuid';
+import { useState } from "react";
+import { v4 as uuid } from "uuid";
 
-function Day ({ dayContent, state, changeAchivementsState}) {
+export function Day ({ dayContent, state, changeAchivementsState}) {
+  const [innerState, setInnerState] = useState([])
+  
   function editTonalli (selectedId) {
     const newState = structuredClone(state)
     const findedIndex = state.findIndex(({id}) => id === selectedId);
@@ -34,12 +35,15 @@ function Day ({ dayContent, state, changeAchivementsState}) {
     }
   };
   function manageExit () {};
-  function manageSave () {};
+  function manageSave () {
+    const newState = 
+    window.localStorage.setItem('daysList', JSON.stringify(state))
+  };
 
   return (
     <div className="paper">
     <button className='edit' onClick={() => editTonalli(dayContent.id)}>🖋️</button>
-    <h3>{dayContent.date}</h3>
+    <h3>{dayContent.date || null}</h3>
     {dayContent.editable && 
       <form onSubmit={manageSubmit}>
         <input type="text" placeholder='Ex: Read 20min' />
@@ -59,51 +63,5 @@ function Day ({ dayContent, state, changeAchivementsState}) {
       </div>
     }
   </div>
-
-  )
-}
-
-export function Card({ achivements, changeAchivementsState}) {
-  function getDate () {
-    const date = new Date();
-    const dd = date.getDate();
-    const mm = date.getMonth() + 1;
-    const yy = date.getFullYear();
-
-    return `${dd}-${mm}-${yy}`
-  };
-  function updateLocalStorage (newState) {
-    window.localStorage.setItem('achivements', JSON.stringify(newState))
-  };
-  function manageAddAcomplish (e) {
-    e.preventDefault();
-
-    const inputValue = e.target[0].value;
-    const newState = [...achivements, {
-      task: inputValue,
-      }];
-
-    setAchivements(newState);
-    updateLocalStorage(newState);
-
-    e.target[0].value = '';
-  };
-
-
-  return(
-    <div className="day_list">
-      {
-        achivements.map(element => {
-          return (
-            <Day
-              key={uuid()} 
-              dayContent={element}
-              state={achivements}
-              changeAchivementsState={changeAchivementsState}
-            />
-          )
-        })
-      }
-    </div>
   )
 }

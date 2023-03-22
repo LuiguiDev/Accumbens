@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import './styles/App.css';
-import { Card } from './Components/Card';
+import { DaysList } from './Components/DaysList';
 import { v4 as uuidv4 } from 'uuid';
+import { Day } from './Components/Day';
+import { Header } from './Components/Header';
 
 function App() {
   const initialState = JSON.parse(localStorage.getItem('achivements')) || [
@@ -31,30 +33,22 @@ function App() {
     }
   ]);
 
-  function changeAchivementsState (newState) {
+  function changeAccState (newState) {
     setAchivements(newState);
   }
 
-
   return (
     <>
-      <header>
-        <h1>1% better everyday</h1>
-        <div className='add_day'>
-          <p style={{color: 'white'}}>
-            Write your accumplish everyday to stay motivated
-          </p>
-          <button>
-            Add day
-          </button>
-        </div>
-      </header>
+      <Header 
+        overallState={achivements}
+        changeAccState={changeAccState}
+      />
       <main className="tonalli_list">
-        <Card 
+        <DaysList 
           key={uuidv4()}
           achivements={achivements}
           id={uuidv4()}
-          changeAchivementsState={changeAchivementsState}
+          changeAccState={changeAccState}
         />
       </main>
     </>
