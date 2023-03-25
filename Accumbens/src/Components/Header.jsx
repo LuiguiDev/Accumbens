@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import '../styles/header.css'
 
 export function Header ({ overallState, changeAccState }) {
+  const darkModeIntitialState = JSON.parse(window.localStorage.getItem('dark-mode')) || false
   // States
   const [day, setDay] = useState(
     {
@@ -12,8 +13,8 @@ export function Header ({ overallState, changeAccState }) {
       editable: false
     }
   );
-  const [prevMode, setPrevMode] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
+  const [prevMode, setPrevMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(darkModeIntitialState);
 
   // Functions
   function changeMode () {
@@ -21,14 +22,13 @@ export function Header ({ overallState, changeAccState }) {
     if (darkMode) {
       body.setAttribute('data-theme', 'dark')
       setDarkMode(false)
+      window.localStorage.setItem('dark-mode', false)
     }else if (!darkMode) {
       body.setAttribute('data-theme', 'light')
       setDarkMode(true)
+      window.localStorage.setItem('dark-mode', true)
     }
   }
-  useState(() => {
-    changeMode()
-  }, []);
   function addAcc (e) {
     e.preventDefault();
 
@@ -41,6 +41,10 @@ export function Header ({ overallState, changeAccState }) {
   function shrinkAddDay () {
     setPrevMode(true)
   };
+  useState(() => {
+    changeMode()
+
+  }, []);
 
   //Components
   const AddDayPrev = () => {

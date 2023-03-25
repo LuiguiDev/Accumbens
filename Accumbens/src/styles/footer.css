@@ -1,11 +1,10 @@
 footer {
+  margin-top: auto;
   font-family: Arial, Helvetica, sans-serif;
   display: flex;
   background-color: var(--footer_background);
   color: var(--body_color);
   padding: 20px;
-  position: absolute;
-  bottom: 0;
   width: calc(100% - 40px);
   justify-content: space-between;
 }

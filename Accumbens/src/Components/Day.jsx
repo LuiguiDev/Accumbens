@@ -2,7 +2,7 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 
 export function Day ({ dayContent, state, changeAccState}) {
-  const [innerState, setInnerState] = useState([])
+  const [contentChanged, setContentChanged] = useState([])
   
   function editTonalli (selectedId) {
     const newState = structuredClone(state)
@@ -30,34 +30,82 @@ export function Day ({ dayContent, state, changeAccState}) {
       const newState = state.filter(({id}) => id != dayContent.id);
 
       changeAccState(newState)
+      window.localStorage.setItem('achivements', JSON.stringify(newState))
     }else{
       console.log('Keep editing')
     }
   };
-  function manageExit () {};
-  function manageSave () {
-    const newState = 
-    window.localStorage.setItem('daysList', JSON.stringify(state))
+  function manageExit () {
+    const previousState = JSON.parse(window.localStorage.getItem('achivements'))
+    changeAccState(previousState)
   };
+  function manageSave () {
+    const newState = structuredClone(state)
+    const finded = newState.find(({id}) => id === dayContent.id)
+
+    finded.editable = false;
+    changeAccState(newState);
+    window.localStorage.setItem('achivements', JSON.stringify(newState))
+  };
+
+  function manageChange (index, e) {   // not working
+    const newState = structuredClone(state);
+    const card = newState.find(({id}) => id === dayContent.id)
+    let content = card.content;
+
+    content[index] = e.target.textContent;
+    changeAccState(newState)
+  }
+
+  function deleteLiElement (selectedIndex) {
+    const newState = structuredClone(state)
+    const finded = newState.find(({id}) => id === dayContent.id)
+    const filtered = finded.content.filter((element) => {
+      return element != dayContent.content[selectedIndex]
+    })
+    
+    finded.content = filtered
+    changeAccState(newState)
+  }
 
   return (
     <div className="paper">
       <div className="header">
         <h3>{dayContent.date}</h3>
-        <button className='edit' onClick={() => editTonalli(dayContent.id)}>Edit</button>
+        <button 
+          className='edit'
+          onClick={() => editTonalli(dayContent.id)}
+        >
+          {dayContent.editable? 'Editing' : 'Edit'}
+        </button>
       </div>
-
       {dayContent.editable && 
         <form onSubmit={manageSubmit}>
           <input type="text" placeholder='Ex: Read 20min' />
           <button className='add'>+</button>
         </form>
       }
-      {dayContent.content?.map(task => {
-        return (
-          <li key={uuid()}>{task}</li>
-        )
-      })}
+      <ul className={dayContent.editable ? 'list_editable' : ''}>
+        {dayContent.content?.map((task, index) => {
+          return (
+            <li key={uuid()}>
+              <p
+                hidden={!dayContent.editable} 
+                className="cross"
+                onClick={() => deleteLiElement(index)}
+              >
+                x
+              </p>
+              <p
+                className="li_text"
+                id={index}
+              >
+                {task}
+              </p>
+            </li>
+          )
+        })}
+      </ul>
       {dayContent.editable &&
         <div className='edit_buttons'>
           <button className='button delete' onClick={manageDelete}>Delete</button>

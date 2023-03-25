@@ -4,8 +4,9 @@ p, .li_element {
 
 .add_day_prev {
   outline: inherit;
-  width: 240px;
-  height: 30px;
+  width: 180px;
+  height: 40px;
+  margin: auto;
   border: 2px solid rgb(9,178,118);
   border-radius: 10px;
   background-color: transparent;
@@ -34,8 +35,7 @@ header {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 240px;
-  margin: auto;
+  width: 260px;
 }
 .card {
   display: flex;
@@ -45,7 +45,7 @@ header {
   border: 2px solid rgb(9,178,118);
   padding: 20px;
   border-radius: 10px;
-  max-width: 200px;
+  max-width: 220px;
 }
 .inputs  {
   display: flex;
@@ -68,23 +68,23 @@ header {
   gap: 20px;
 }
 .close_day {
+  width: 75px;
   border: 2px solid gray;
   background-color: transparent;
   color: var(--body_color);
-  height: 24px;
   border-radius: 5px;
-  padding: 2px 15px;
+  padding: 5px 0px;
 }
 .close_day:hover {
   background-color: grey;
   color: white;
 }
 .add_day {
-  height: 24px;
+  width: 75px;
   border: 2px solid rgb(9,178,118);
   border-radius: 5px;
   background: transparent;
-  padding: 2px 15px;
+  padding: 5px 0px;
   color: var(--body_color);
 }
 .add_day:hover{
