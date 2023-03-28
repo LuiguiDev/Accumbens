@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import '../styles/card.css';
 import { v4 as uuid } from 'uuid';
 import { Day } from './Day';
 
 
 export function DaysList({ achivements, changeAccState}) {
+  const accSorted = structuredClone(achivements)
 
   function getDate () {
     const date = new Date();
@@ -32,7 +32,7 @@ export function DaysList({ achivements, changeAccState}) {
   };
 
   return(
-    <main className="day_list">
+    <main className="day_list ">
       {
         achivements.map(element => {
           return (

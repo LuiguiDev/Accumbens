@@ -15,16 +15,19 @@ export function Header ({ overallState, changeAccState }) {
   );
   const [prevMode, setPrevMode] = useState(true);
   const [darkMode, setDarkMode] = useState(darkModeIntitialState);
+  const body = document.querySelector('body');
+
+  body.setAttribute('data-theme', darkMode ? 'dark' : 'light')
 
   // Functions
   function changeMode () {
     const body = document.querySelector('body')
     if (darkMode) {
-      body.setAttribute('data-theme', 'dark')
+      body.setAttribute('data-theme', 'light')
       setDarkMode(false)
       window.localStorage.setItem('dark-mode', false)
     }else if (!darkMode) {
-      body.setAttribute('data-theme', 'light')
+      body.setAttribute('data-theme', 'dark')
       setDarkMode(true)
       window.localStorage.setItem('dark-mode', true)
     }
@@ -41,10 +44,6 @@ export function Header ({ overallState, changeAccState }) {
   function shrinkAddDay () {
     setPrevMode(true)
   };
-  useState(() => {
-    changeMode()
-
-  }, []);
 
   //Components
   const AddDayPrev = () => {

@@ -31,6 +31,10 @@ h1, p {
   padding: 20px;
   width: calc(100% - 40px);
   min-height: 20px;
+  transition: height 0.5s ease-out;
+}
+.transition {
+  height: auto;
 }
 
 form {
