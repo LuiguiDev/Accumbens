@@ -4,7 +4,15 @@ import { Day } from './Day';
 
 
 export function DaysList({ achivements, changeAccState}) {
-  const accSorted = structuredClone(achivements)
+
+  // sort the days descending accorting to their dates
+  let accSorted = structuredClone(achivements);
+  accSorted = accSorted.sort((a, b) => b.date - a.date);
+  accSorted.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateB - dateA
+  })
 
   function getDate () {
     const date = new Date();
@@ -34,7 +42,7 @@ export function DaysList({ achivements, changeAccState}) {
   return(
     <main className="day_list ">
       {
-        achivements.map(element => {
+        accSorted.map(element => {
           return (
             <Day
               key={uuid()} 

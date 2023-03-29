@@ -5,14 +5,12 @@ export function Day ({ dayContent, state, changeAccState}) {
   const [contentChanged, setContentChanged] = useState([])
   
   function editTonalli (selectedId) {
-    const element = document.querySelector('.paper')
     const newState = structuredClone(state)
     const findedIndex = state.findIndex(({id}) => id === selectedId);
     const findedCard = newState[findedIndex]
 
     if(!findedCard) return
     if(findedCard) {
-      element.classList.remove('paper')
       findedCard.editable = !findedCard.editable
       changeAccState(newState)
     }
