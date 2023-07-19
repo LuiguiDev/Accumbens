@@ -7,6 +7,17 @@ import { Header } from './Components/Header';
 import { Footer } from './Components/Footer';
 import { AreaChart, ResponsiveContainer, Area, XAxis, Tooltip } from 'recharts';
 
+function CustomTooltip ({ active, payload, label }) {
+  if (!active) return null
+
+  return (
+    <div className="tooltip">
+      <h4>{payload[0].payload.date}</h4>
+      <p>{payload[0].value}</p>
+    </div>
+  )
+}
+
 function App() {
   const initialState = JSON.parse(localStorage.getItem('achivements')) || [];
   const [achivements, setAchivements] = useState(initialState);
@@ -23,8 +34,6 @@ function App() {
       )
       setData(newData)
     })
-
-    console.log(newData)
   }, [achivements])
 
   function changeAccState (newState) {
@@ -49,14 +58,14 @@ function App() {
           <defs>
             <linearGradient id='color' x1='0' y1='0' x2='0' y2='1'  >
               <stop offset='0%' stopColor='#09b276' stopOpacity={0.4} />
-              <stop offset='75%' stopColor='#09b276' stopOpacity={0.1} />
+              <stop offset='75%' stopColor='#09b276' stopOpacity={0.05} />
             </linearGradient>
           </defs>
           <Area dataKey="value" stroke="#09b276" fill='url(#color)' />
-          <XAxis dataKey="date" />
-          <Tooltip />
+          <Tooltip content={<CustomTooltip />} />
         </AreaChart>
       </ResponsiveContainer>
+      <p>This week</p>
 
       <Footer />
     </>

@@ -47,6 +47,24 @@ export function Day ({ dayContent, state, changeAccState}) {
     changeAccState(newState);
     window.localStorage.setItem('achivements', JSON.stringify(newState))
   };
+  function checkDate () {
+    const stringToNumbers = dayContent.date.split('-')
+    const currentDate = new Date()
+    const cardDate = new Date(stringToNumbers[0], stringToNumbers[1] - 1, stringToNumbers[2])
+
+    currentDate.setHours(0, 0, 0, 0)
+    cardDate.setHours(0, 0, 0, 0)
+
+    const difference = (currentDate - cardDate) / (1000 * 60 * 60 * 24)
+
+    if(difference === 0) {
+      return 'Today'
+    }else if(difference === 1) {
+      return 'Yesterday'
+    }else{
+      return `${difference} days ago`
+    }
+  }
 
   function manageChange (index, e) {   // not working
     const newState = structuredClone(state);
@@ -71,7 +89,7 @@ export function Day ({ dayContent, state, changeAccState}) {
   return (
     <div className="paper" >
       <div className="header">
-        <h3>{dayContent.date}</h3>
+        <h3>{checkDate()}</h3>
         <button 
           className='edit'
           onClick={() => editTonalli(dayContent.id)}
@@ -94,7 +112,7 @@ export function Day ({ dayContent, state, changeAccState}) {
                 className="cross"
                 onClick={() => deleteLiElement(index)}
               >
-                x
+                <small>❌</small>
               </p>
               <p
                 className="li_text"
