@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import { Modal } from "./Modal";
 
-export function Day ({ dayContent, state, changeAccState}) {
+export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
   const [contentChanged, setContentChanged] = useState([])
   
   function editTonalli (selectedId) {
@@ -36,6 +37,7 @@ export function Day ({ dayContent, state, changeAccState}) {
     }
   };
   function manageExit () {
+    modalConfirmation('delete')
     const previousState = JSON.parse(window.localStorage.getItem('achivements'))
     changeAccState(previousState)
   };

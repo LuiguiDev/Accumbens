@@ -6,6 +6,7 @@ import { Day } from './Components/Day';
 import { Header } from './Components/Header';
 import { Footer } from './Components/Footer';
 import { AreaChart, ResponsiveContainer, Area, XAxis, Tooltip } from 'recharts';
+import { Modal } from './Components/Modal';
 
 function CustomTooltip ({ active, payload, label }) {
   if (!active) return null
@@ -22,6 +23,13 @@ function App() {
   const initialState = JSON.parse(localStorage.getItem('achivements')) || [];
   const [achivements, setAchivements] = useState(initialState);
   const [data, setData] = useState([])
+  const [modalIsActive, setModalIsActive] = useState(false)
+  const [modalType, setModalType] = useState('')
+
+  function modalConfirmation (newType) {
+    setModalIsActive(true)
+    setModalType(newType)
+  }
   
   useEffect(() => {
     const newData = structuredClone(data)
@@ -42,15 +50,16 @@ function App() {
 
   return (
     <>
-      <Header 
+      <Header
         overallState={achivements}
         changeAccState={changeAccState}
       />
-      <DaysList 
+      <DaysList
         key={uuidv4()}
         achivements={achivements}
         id={uuidv4()}
         changeAccState={changeAccState}
+        modalConfirmation={modalConfirmation}
       />
       
       <ResponsiveContainer width='100%' height={200}>
@@ -66,6 +75,8 @@ function App() {
         </AreaChart>
       </ResponsiveContainer>
       <p>This week</p>
+
+      <Modal active={modalIsActive} type={modalType}/>
 
       <Footer />
     </>

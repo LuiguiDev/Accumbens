@@ -91,3 +91,7 @@ header {
   background-color: rgb(9,178,118);
   color: white;
 }
+.errorMessage{
+  color: orange;
+  margin: 10px 0px;
+}

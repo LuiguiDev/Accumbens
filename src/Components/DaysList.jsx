@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { Day } from './Day';
 
 
-export function DaysList({ achivements, changeAccState}) {
+export function DaysList({ achivements, changeAccState, modalConfirmation}) {
 
   // sort the days descending accorting to their dates
   let accSorted = structuredClone(achivements);
@@ -49,6 +49,7 @@ export function DaysList({ achivements, changeAccState}) {
               dayContent={element}
               state={achivements}
               changeAccState={changeAccState}
+              modalConfirmation={modalConfirmation}
             />
           )
         })

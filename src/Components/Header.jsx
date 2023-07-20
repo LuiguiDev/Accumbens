@@ -57,10 +57,22 @@ export function Header ({ overallState, changeAccState }) {
     )
   };
   const AddDayExtended = ({overallState, changeAccState}) => {
+    const [emptySend, setEmptySend] = useState(false)
+    const [emptyDate, setEmptyDate] = useState(false)
+
     function manageAddDay () {
-      if(day.content.length === 0) return
+      // checking whether the user miss add a date or add tasks
+      if(day.content.length === 0) {
+        setEmptySend(true)
+      }
+      if(day.date === undefined) {
+        setEmptyDate(true)
+        return
+      }
 
       const newState = structuredClone(overallState);
+      setEmptySend(false)
+      setEmptyDate(false)
 
       newState.push(day);
       changeAccState(newState);
@@ -96,7 +108,14 @@ export function Header ({ overallState, changeAccState }) {
         </div>
         <ul className="content">
           {day.content.length === 0 && 
-            <li className="li_element">Heare will be displayed your accomplishments</li>
+            <p className="li_element">Heare will be displayed your accomplishments</p>
+          }
+          {emptySend === true &&
+            <p className="errorMessage">Add at least one task</p>
+          }
+          {
+            emptyDate === true &&
+            <p className="errorMessage">Missing the date</p>
           }
           {day.content.map(element => {
             return (
