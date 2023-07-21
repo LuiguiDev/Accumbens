@@ -7,7 +7,7 @@ h1, p {
 }
 .day_list{
   display: grid;
-  grid-template-columns: repeat(auto-fit, 260px);
+  grid-template-columns: repeat(auto-fit, var(--card_width));
   gap: 20px;
   justify-content: center;
   align-items: center;

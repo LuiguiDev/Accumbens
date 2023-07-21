@@ -1,0 +1,31 @@
+.modal_background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.539);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal_container {
+  box-sizing: border-box;
+  background-color: white;
+  padding: 20px;
+  position: relative;
+  border-radius: 15px;
+  width: var(--card_width);
+}
+.modal_icon {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  border-radius: 50%;
+}

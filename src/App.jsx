@@ -6,7 +6,8 @@ import { Day } from './Components/Day';
 import { Header } from './Components/Header';
 import { Footer } from './Components/Footer';
 import { AreaChart, ResponsiveContainer, Area, XAxis, Tooltip } from 'recharts';
-import { Modal } from './Components/Modal';
+import { Modal, ModalContent } from './Components/Modal';
+import { v4 as uuid } from 'uuid';
 
 function CustomTooltip ({ active, payload, label }) {
   if (!active) return null
@@ -23,13 +24,40 @@ function App() {
   const initialState = JSON.parse(localStorage.getItem('achivements')) || [];
   const [achivements, setAchivements] = useState(initialState);
   const [data, setData] = useState([])
-  const [modalIsActive, setModalIsActive] = useState(false)
-  const [modalType, setModalType] = useState('')
+  const [modalState, setModalState] = useState(
+      {
+        active: false,
+        type: undefined,
+        options: {}
+      }
+    )
 
-  function modalConfirmation (newType) {
-    setModalIsActive(true)
-    setModalType(newType)
+  function modalConfirmation (newType, newOptions) {
+    setModalState(
+      {
+        active: true,
+        type: newType,
+        options: newOptions
+      }
+    )
   }
+  function easeModal () {
+    setModalState(
+      {
+        active: false,
+        type: undefined,
+        options: {}
+      }
+    )    
+  }
+
+  let accSorted = structuredClone(achivements);
+  accSorted = accSorted.sort((a, b) => b.date - a.date);
+  accSorted.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateB - dateA
+  })
   
   useEffect(() => {
     const newData = structuredClone(data)
@@ -54,13 +82,21 @@ function App() {
         overallState={achivements}
         changeAccState={changeAccState}
       />
-      <DaysList
-        key={uuidv4()}
-        achivements={achivements}
-        id={uuidv4()}
-        changeAccState={changeAccState}
-        modalConfirmation={modalConfirmation}
-      />
+      <DaysList>
+        {
+          accSorted.map(element => {
+            return (
+              <Day
+                key={uuid()} 
+                dayContent={element}
+                state={achivements}
+                changeAccState={changeAccState}
+                modalConfirmation={modalConfirmation}
+              />
+            )
+          })
+        }
+      </DaysList>
       
       <ResponsiveContainer width='100%' height={200}>
         <AreaChart data={data}>
@@ -76,8 +112,30 @@ function App() {
       </ResponsiveContainer>
       <p>This week</p>
 
-      <Modal active={modalIsActive} type={modalType}/>
-
+      <Modal active={modalState.active}>
+        {modalState.type === 'delete' &&
+            <ModalContent 
+              icon='🗑️'
+              title='The entire day will be deleted'
+              buttons={['Delete', 'Cancel']}
+              easeModal={easeModal}
+              type={modalState.type}
+              changeAccState={changeAccState}
+              options={modalState.options}
+            />
+        }
+        {modalState.type === 'exit' &&
+          <ModalContent 
+            icon='➡️'
+            title='Exit? Changes wont be saved'
+            buttons={['Exit', 'Return']}
+            easeModal={easeModal}
+            type={modalState.type}
+            changeAccState={changeAccState}
+            options={modalState.options}
+          />
+        }
+      </Modal>
       <Footer />
     </>
   )

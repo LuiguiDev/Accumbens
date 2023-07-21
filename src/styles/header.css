@@ -35,7 +35,7 @@ header {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 260px;
+  width: var(--card_width);
 }
 .card {
   display: flex;
@@ -45,7 +45,7 @@ header {
   border: 2px solid rgb(9,178,118);
   padding: 20px;
   border-radius: 10px;
-  max-width: 220px;
+  max-width: var(--card_width);
 }
 .inputs  {
   display: flex;

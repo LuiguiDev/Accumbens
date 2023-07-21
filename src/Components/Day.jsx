@@ -27,19 +27,10 @@ export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
     changeAccState(newState)
   }
   function manageDelete() {
-    if(confirm('Are you sure you want to delete this entire day?')){
-      const newState = state.filter(({id}) => id != dayContent.id);
-
-      changeAccState(newState)
-      window.localStorage.setItem('achivements', JSON.stringify(newState))
-    }else{
-      console.log('Keep editing')
-    }
+    modalConfirmation('delete', {state, dayContent})
   };
   function manageExit () {
-    modalConfirmation('delete')
-    const previousState = JSON.parse(window.localStorage.getItem('achivements'))
-    changeAccState(previousState)
+    modalConfirmation('exit', {})
   };
   function manageSave () {
     const newState = structuredClone(state)
@@ -67,7 +58,6 @@ export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
       return `${difference} days ago`
     }
   }
-
   function manageChange (index, e) {   // not working
     const newState = structuredClone(state);
     const card = newState.find(({id}) => id === dayContent.id)

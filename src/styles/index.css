@@ -15,6 +15,7 @@
   --input_border: 2px solid white;
   --buttons_color: white;
   --footer_background: black;
+  --card_width: 290px
 }
 [data-theme='light'] {
   --body_background: #ffffff;
