@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
-import { Modal } from "./Modal";
+import { Button } from "./button";
 
 export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
   const [contentChanged, setContentChanged] = useState([])
@@ -26,8 +26,12 @@ export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
     finded.content.push(inputValue)
     changeAccState(newState)
   }
-  function manageDelete() {
-    modalConfirmation('delete', {state, dayContent})
+  function manageDelete(e) {
+    const target = e.target
+    const scrollY = window.scrollY;
+    const topOffset = target.top + scrollY;
+    
+    modalConfirmation('delete', {state, dayContent, scrollY})
   };
   function manageExit () {
     modalConfirmation('exit', {})
@@ -66,7 +70,6 @@ export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
     content[index] = e.target.textContent;
     changeAccState(newState)
   }
-
   function deleteLiElement (selectedIndex) {
     const newState = structuredClone(state)
     const finded = newState.find(({id}) => id === dayContent.id)
@@ -82,12 +85,14 @@ export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
     <div className="paper" >
       <div className="header">
         <h3>{checkDate()}</h3>
-        <button 
-          className='edit'
-          onClick={() => editTonalli(dayContent.id)}
-        >
-          {dayContent.editable? 'Editing' : 'Edit'}
-        </button>
+        {dayContent.editable === false &&
+          <button 
+            className='edit'
+            onClick={() => editTonalli(dayContent.id)}
+          >
+            Edit
+          </button>
+        }
       </div>
       {dayContent.editable && 
         <form onSubmit={manageSubmit}>
@@ -118,9 +123,9 @@ export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
       </ul>
       {dayContent.editable &&
         <div className='edit_buttons'>
-          <button className='button delete' onClick={manageDelete}>Delete</button>
-          <button className='button exit' onClick={manageExit}>Exit</button>
-          <button className='button save' onClick={manageSave}>Save</button>
+          <Button className='delete' text='Delete' manageClick={manageDelete} />
+          <Button className='exit' text='Exit' manageClick={manageExit} />
+          <Button className='save' text='Save' manageClick={manageSave} />
         </div>
       }
     </div>

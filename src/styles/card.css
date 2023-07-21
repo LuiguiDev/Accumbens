@@ -64,22 +64,10 @@ input {
   width: 100%;
   justify-content: space-between;
 }
-.button {
-  width: 60px;
-  border: none;
-  padding: 5px 0px;
-  border-radius: 5px;
-  color: white;
+.edit {
+  color: black;
 }
-.delete {
-  background-color: red;
-}
-.exit {
-  background-color: grey;
-}
-.save {
-  background-color: rgb(9,178,118);
-}
+
 .list_editable {
   list-style: none;
   padding: 0;

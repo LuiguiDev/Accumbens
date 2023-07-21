@@ -15,12 +15,13 @@
   --input_border: 2px solid white;
   --buttons_color: white;
   --footer_background: black;
-  --card_width: 290px
+  --card_width: 290px;
+  --main_color: rgb(9,178,118)
 }
 [data-theme='light'] {
   --body_background: #ffffff;
   --body_color: black;
-  --input_border: 2px solid #09b276;
+  --input_border: 2px solid var(--main_color);
   --buttons_color: black;
   --footer_background: rgb(216, 223, 238);
 }

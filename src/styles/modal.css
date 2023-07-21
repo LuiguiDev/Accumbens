@@ -13,19 +13,28 @@
   box-sizing: border-box;
   background-color: white;
   padding: 20px;
-  position: relative;
+  position: absolute;
   border-radius: 15px;
   width: var(--card_width);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .modal_icon {
-  position: absolute;
-  top: -20px;
-  left: 50%;
+  transform: translateX(-50%);
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
+  background-color: white;
   border-radius: 50%;
+  border: 2px solid var(--body_color);
+}
+h3 {
+  margin-top: 12px;
+}
+.buttons {
+  display: flex;
+  justify-content: space-around;
 }

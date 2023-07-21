@@ -1,7 +1,13 @@
 import '../styles/modal.css'
+import { Button } from './button'
 
 export const ModalContent = ({ icon, title, buttons, easeModal, type, changeAccState, options }) => {
-  const { state, dayContent } = options
+  const { state, dayContent, scrollY } = options
+  const [leftButtonText, rightButtonText] = buttons
+  const leftButtonClass = leftButtonText.toLowerCase()
+  const style = {
+    top: `${scrollY + (window.innerHeight / 2) - 150}px`
+  }
 
   function manageActionClick () {
     if (type === 'delete') {
@@ -18,30 +24,16 @@ export const ModalContent = ({ icon, title, buttons, easeModal, type, changeAccS
       console.log('can not manage this')
     }
   }
-  function manageExit () {
-    const previousState = JSON.parse(window.localStorage.getItem('achivements'))
-    changeAccState(previousState)
-  }
 
   return (
-    <>
+    <div className="modal_container" style={style}>
       <div className="modal_icon">{icon}</div>
       <h3>{title}</h3>
       <div className="buttons">
-        <button 
-          className={buttons[0].toLowerCase()}
-          onClick={() => manageActionClick()}
-        >
-          {buttons[0]}
-        </button>
-        <button 
-          className={buttons[1].toLowerCase()}
-          onClick={() => easeModal()}
-        >
-          {buttons[1]}
-        </button>
+        <Button className={leftButtonClass} text={leftButtonText} manageClick={manageActionClick} />
+        <Button className='save' text={rightButtonText} manageClick={easeModal} />
       </div>
-    </>
+    </div>
   )
 }
 
@@ -50,9 +42,7 @@ export const Modal = ({ active, children }) => {
 
   return (
     <div className="modal_background">
-      <div className="modal_container">
-        {children}
-      </div>
+      {children}
     </div>
   )
 }

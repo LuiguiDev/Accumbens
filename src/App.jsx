@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import './styles/App.css';
+import { AreaChart, ResponsiveContainer, Area, XAxis, Tooltip } from 'recharts';
+import { v4 as uuid } from 'uuid';
 import { DaysList } from './Components/DaysList';
-import { v4 as uuidv4 } from 'uuid';
 import { Day } from './Components/Day';
 import { Header } from './Components/Header';
 import { Footer } from './Components/Footer';
-import { AreaChart, ResponsiveContainer, Area, XAxis, Tooltip } from 'recharts';
 import { Modal, ModalContent } from './Components/Modal';
-import { v4 as uuid } from 'uuid';
+import { Button } from './Components/button';
 
 function CustomTooltip ({ active, payload, label }) {
   if (!active) return null
@@ -82,6 +82,7 @@ function App() {
         overallState={achivements}
         changeAccState={changeAccState}
       />
+
       <DaysList>
         {
           accSorted.map(element => {
@@ -116,7 +117,7 @@ function App() {
         {modalState.type === 'delete' &&
             <ModalContent 
               icon='🗑️'
-              title='The entire day will be deleted'
+              title='The entire day will be deleted.'
               buttons={['Delete', 'Cancel']}
               easeModal={easeModal}
               type={modalState.type}
@@ -127,7 +128,7 @@ function App() {
         {modalState.type === 'exit' &&
           <ModalContent 
             icon='➡️'
-            title='Exit? Changes wont be saved'
+            title='Exit? Changes wont be saved.'
             buttons={['Exit', 'Return']}
             easeModal={easeModal}
             type={modalState.type}
