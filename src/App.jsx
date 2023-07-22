@@ -7,7 +7,6 @@ import { Day } from './Components/Day';
 import { Header } from './Components/Header';
 import { Footer } from './Components/Footer';
 import { Modal, ModalContent } from './Components/Modal';
-import { Button } from './Components/button';
 
 function CustomTooltip ({ active, payload, label }) {
   if (!active) return null
