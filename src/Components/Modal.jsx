@@ -1,13 +1,12 @@
+import { useEffect, useState } from 'react'
 import '../styles/modal.css'
-import { Button } from './Button'
+import { Button } from './button'
 
 export const ModalContent = ({ icon, title, buttons, easeModal, type, changeAccState, options }) => {
+  const [midPoint, setMidPoint] = useState(0)
   const { state, dayContent, scrollY } = options
   const [leftButtonText, rightButtonText] = buttons
   const leftButtonClass = leftButtonText.toLowerCase()
-  const style = {
-    top: `${scrollY + (window.innerHeight / 2) - 150}px`
-  }
 
   function manageActionClick () {
     if (type === 'delete') {
@@ -25,20 +24,44 @@ export const ModalContent = ({ icon, title, buttons, easeModal, type, changeAccS
     }
   }
 
+  useEffect(() => {
+    function setStyles () {
+      const element = document.querySelector('.modal_container')
+
+      if (element) {
+        const elementMidPoint = element.offsetHeight / 2
+        const midPoint = scrollY + (window.innerHeight / 2) - elementMidPoint
+
+        setMidPoint(midPoint)
+      }
+    } 
+
+    setStyles() 
+  }, [])
+
   return (
-    <div className="modal_container" style={style}>
-      <div className="modal_icon">{icon}</div>
+    <div className="modal_container" style={{top: midPoint}}>
+      <div className='icon_container'>
+        <div className="modal_icon">{icon}</div>
+      </div>
       <h3>{title}</h3>
       <div className="buttons">
         <Button className={leftButtonClass} text={leftButtonText} manageClick={manageActionClick} />
-        <Button className='save' text={rightButtonText} manageClick={easeModal} />
+        <Button className='exit' text={rightButtonText} manageClick={easeModal} />
       </div>
     </div>
   )
 }
 
-export const Modal = ({ active, children }) => {
-  if (!active) return
+export const Modal = ({ active, children, easeModal }) => {
+  if (!active) {
+    const body = document.querySelector('body')
+    body.style.overflow = 'auto'
+    return      
+  }
+
+  const body = document.querySelector('body')
+  body.style.overflow = 'hidden'
 
   return (
     <div className="modal_background">

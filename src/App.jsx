@@ -112,7 +112,7 @@ function App() {
       </ResponsiveContainer>
       <p>This week</p>
 
-      <Modal active={modalState.active}>
+      <Modal active={modalState.active} easeModal={easeModal}>
         {modalState.type === 'delete' &&
             <ModalContent 
               icon='🗑️'
@@ -128,7 +128,7 @@ function App() {
           <ModalContent 
             icon='➡️'
             title='Exit? Changes wont be saved.'
-            buttons={['Exit', 'Return']}
+            buttons={['Exit', 'Go back']}
             easeModal={easeModal}
             type={modalState.type}
             changeAccState={changeAccState}

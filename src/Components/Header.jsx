@@ -22,6 +22,8 @@ export function Header ({ overallState, changeAccState }) {
   // Functions
   function changeMode () {
     const body = document.querySelector('body')
+
+
     if (darkMode) {
       body.setAttribute('data-theme', 'light')
       setDarkMode(false)
@@ -31,6 +33,7 @@ export function Header ({ overallState, changeAccState }) {
       setDarkMode(true)
       window.localStorage.setItem('dark-mode', true)
     }
+
   }
   function addAcc (e) {
     e.preventDefault();

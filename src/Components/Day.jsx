@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
-import { Button } from "./Button";
+import { Button } from "./button";
 
 export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
   const [contentChanged, setContentChanged] = useState([])
@@ -27,14 +27,14 @@ export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
     changeAccState(newState)
   }
   function manageDelete(e) {
-    const target = e.target
     const scrollY = window.scrollY;
-    const topOffset = target.top + scrollY;
     
     modalConfirmation('delete', {state, dayContent, scrollY})
   };
   function manageExit () {
-    modalConfirmation('exit', {})
+    const scrollY = window.scrollY;
+
+    modalConfirmation('exit', {scrollY})
   };
   function manageSave () {
     const newState = structuredClone(state)
