@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import '../styles/modal.css'
-import { Button } from './button'
+import { Button } from './Button'
 
 export const ModalContent = ({ icon, title, buttons, easeModal, type, changeAccState, options }) => {
   const [midPoint, setMidPoint] = useState(0)
