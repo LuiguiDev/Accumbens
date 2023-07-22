@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
-import { Button } from "./button";
+import { Button } from "./Button";
 
 export function Day ({ dayContent, state, changeAccState, modalConfirmation}) {
   const [contentChanged, setContentChanged] = useState([])

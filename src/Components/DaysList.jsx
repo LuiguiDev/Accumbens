@@ -1,7 +1,4 @@
 import '../styles/card.css';
-import { Day } from './Day';
-import { Children } from 'react';
-
 
 export function DaysList({ children }) {
 
